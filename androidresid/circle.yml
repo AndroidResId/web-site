@@ -1,0 +1,16 @@
+general:
+  branches:
+    only:
+      - master
+
+dependencies:
+  override:
+    - npm install -g firebase-tools gulp bower mocha
+    - cd master && npm start
+
+deployment:
+  production:
+    branch: master
+    commands:
+      - firebase use androidresid --token "$FIREBASE_TOKEN"
+      - firebase deploy --token "$FIREBASE_TOKEN
