@@ -14,5 +14,5 @@ deployment:
   production:
     branch: master
     commands:
-      - firebase use androidresid --token "$FIREBASE_TOKEN"
+      - firebase use neural-cathode-650 --token "$FIREBASE_TOKEN"
       - firebase deploy --token "$FIREBASE_TOKEN --non-interactive
