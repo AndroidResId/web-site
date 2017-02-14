@@ -6,7 +6,7 @@ general:
 dependencies:
   override:
     - npm install -g firebase-tools gulp bower mocha
-    - cd master && npm start
+    - npm start
 
 deployment:
   production:
