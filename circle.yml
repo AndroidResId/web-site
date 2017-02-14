@@ -5,6 +5,9 @@ general:
 
 dependencies:
   override:
+    - npm install -g npm@latest
+    - rm -rf node_modules
+    - npm install
     - npm install -g firebase-tools gulp bower mocha
     - npm start
 
