@@ -23,9 +23,6 @@ dependencies:
     
 test:
   override:
-    - yarn run lint
-    - yarn run analyze
-    - yarn run deploy:test
     - yarn test
     
 deployment:
