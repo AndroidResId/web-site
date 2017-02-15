@@ -1,1 +1,1 @@
-# AndroidResid.com web-site development repository
+# AndroidResid.com - the significant resources for Android developers
