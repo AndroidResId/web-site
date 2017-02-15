@@ -1,21 +1,15 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
+import AppBarWithDrawer from './components/AppBarWithDrawer'
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to AndroidResId</h2>
-        </div>
-        <p className="App-intro">
-         The most significant resources for Android developers.
-        </p>
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div>
+                <AppBarWithDrawer/>
+            </div>
+        );
+    }
 }
 
 export default App;
