@@ -2,6 +2,15 @@
   text-align: center;
 }
 
+.mdl-layout__drawer {
+  width: 400px;
+  left: -250px;
+}
+
+.mdl-layout__drawer.is-visible {
+  left: 0;
+}
+
 .drawer-separator {
   height: 1px;
   background-color: #E0E0E0;
