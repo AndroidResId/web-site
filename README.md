@@ -1,1 +1,3 @@
-# AndroidResid.com - the significant resources for Android developers
+# [AndroidResid](https://androidresid.com/)
+
+## The most significant resources for Android developers
