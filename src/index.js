@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 import App from './App';
 import './index.css';
 import * as firebase from 'firebase';
@@ -10,10 +11,11 @@ var config = {
     databaseURL: "https://neural-cathode-650.firebaseio.com",
     storageBucket: "neural-cathode-650.appspot.com",
     messagingSenderId: "309475002057"
-  };
-  firebase.initializeApp(config);
+};
+firebase.initializeApp(config);
+injectTapEventPlugin();
 
 ReactDOM.render(
-  <App />,
-  document.getElementById('root')
+    <App />,
+    document.getElementById('root')
 );
