@@ -5,7 +5,7 @@ import App from './App';
 import './index.css';
 import * as firebase from 'firebase';
 
-var config = {
+const config = {
     apiKey: "AIzaSyANTaJBeWtEfrt7dcCPjx3N3uIx6AMLw-8",
     authDomain: "neural-cathode-650.firebaseapp.com",
     databaseURL: "https://neural-cathode-650.firebaseio.com",
