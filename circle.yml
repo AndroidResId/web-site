@@ -15,7 +15,6 @@ dependencies:
     - yarn install
     - npm install -g npm@latest
     - rm -rf node_modules
-    - npm install
     - npm install -g firebase-tools gulp bower mocha
   cache_directories:
     - ~/.yarn
