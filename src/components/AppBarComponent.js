@@ -44,7 +44,7 @@ class AppBarComponent extends React.Component {
                 <AppBar
                     title={
                         <div>
-                            <img src={logo} alt="logo" width={44} height={44}/>  AndroidResId - the most significant
+                            <img src={logo} alt="logo" width={45} height={45}/>  AndroidResId - the most significant
                             resources for Android developers.
                         </div>
                     }
