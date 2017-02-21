@@ -4,6 +4,7 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
 import CircularProgress from 'material-ui/CircularProgress';
+import logo from '../android-logo-white.png'
 
 class AppBarComponent extends React.Component {
     constructor(props) {
@@ -41,7 +42,12 @@ class AppBarComponent extends React.Component {
         return (
             <div>
                 <AppBar
-                    title="AndroidResId - the most significant resources for Android developers."
+                    title={
+                        <div>
+                            <img src={logo} alt="logo" width={44} height={44}/>  AndroidResId - the most significant
+                            resources for Android developers.
+                        </div>
+                    }
                     onLeftIconButtonTouchTap={this.handleToggle}
                     iconElementRight={
                         <FlatButton onClick={this.handleAbout} label="About"/>
