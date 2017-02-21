@@ -1,26 +1,67 @@
 import React from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {grey900, blue900} from 'material-ui/styles/colors';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import {getMuiTheme, MuiThemeProvider} from 'material-ui/styles';
+import Paper from 'material-ui/Paper';
+import CircularProgress from 'material-ui/CircularProgress';
 
 import './App.css';
 import AppBarComponent from './components/AppBarComponent'
 
-const muiTheme = getMuiTheme({
-    palette: {
-        primary1Color: grey900,
-        accent1Color: blue900,
-    },
-});
-
+import {getContent, getLinks} from './services/contentService';
 
 class App extends React.Component {
+    constructor() {
+        super();
+        const muiTheme = getMuiTheme({
+            palette: {
+                primary1Color: grey900,
+                accent1Color: blue900,
+            },
+        });
+
+        this.state = {
+            muiTheme,
+            articleText: null,
+            drawerLinks: []
+        };
+        // setTimeout loader demo
+        setTimeout(() => {
+            getLinks()
+                .then(drawerLinks => this.setState({drawerLinks}));
+        }, 3000);
+    }
+
+    createLoader() {
+        return <CircularProgress style={{
+            position: 'absolute',
+            top: 'calc(50% - 20px)',
+            left: 'calc(50% - 20px)'
+        }}/>;
+    }
+
+    handleMenuItemChange = (articleId) => {
+        this.setState({
+            articleText: this.createLoader()
+        });
+        // setTimeout loader demo
+        setTimeout(() => {
+            getContent(articleId)
+                .then(articleText => {
+                    this.setState({articleText});
+                });
+        }, 3000);
+    };
 
     render() {
         return (
-            <MuiThemeProvider muiTheme={muiTheme}>
+            <MuiThemeProvider muiTheme={this.state.muiTheme}>
                 <div>
-                    <AppBarComponent/>
+                    <AppBarComponent
+                        menuElementChange={this.handleMenuItemChange}
+                        menuAbout={this.handleMenuItemChange.bind(this, 'about')}
+                        links={this.state.drawerLinks}
+                    />
+                    <Paper zDepth={0}>{this.state.articleText}</Paper>
                 </div>
             </MuiThemeProvider>
         );

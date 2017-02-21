@@ -1,15 +1,13 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 
-export const NavRow = React.createClass({
-    render: function () {
+const NavRow = React.createClass({
+    render: function() {
         const resList = this.props.resList;
-        const resRowTemplate = resList.map(function (item, index) {
-            return (
-                <div key={index}>
-                    <a className="mdl-navigation__link" href={item.resUrl}>{item.id}. {item.resName}</a>
-                </div>
-            )
-        });
+        const resRowTemplate = resList.map((item, index) => (
+            <div key={index}>
+                <a className="mdl-navigation__link" href={item.resUrl}>{item.id}. {item.resName}</a>
+            </div>
+        ));
 
         return (
             <div>
@@ -18,5 +16,13 @@ export const NavRow = React.createClass({
         );
     }
 });
+
+NavRow.propTypes = {
+    resList: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number,
+        resName: PropTypes.string,
+        resUrl: PropTypes.string
+    }))
+};
 
 export default NavRow;
