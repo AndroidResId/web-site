@@ -24,11 +24,8 @@ class App extends React.Component {
             articleText: null,
             drawerLinks: []
         };
-        // setTimeout loader demo
-        setTimeout(() => {
-            getLinks()
-                .then(drawerLinks => this.setState({drawerLinks}));
-        }, 3000);
+        getLinks()
+            .then(drawerLinks => this.setState({drawerLinks}));
     }
 
     createLoader() {
