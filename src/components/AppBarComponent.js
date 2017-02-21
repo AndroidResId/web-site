@@ -41,7 +41,7 @@ class AppBarComponent extends React.Component {
         return (
             <div>
                 <AppBar
-                    title="AndroidResId"
+                    title="AndroidResId - the most significant resources for Android developers."
                     onLeftIconButtonTouchTap={this.handleToggle}
                     iconElementRight={
                         <FlatButton onClick={this.handleAbout} label="About"/>
