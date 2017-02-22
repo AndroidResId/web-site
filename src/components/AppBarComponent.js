@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
+import {ListItem} from 'material-ui/List';
 import FlatButton from 'material-ui/FlatButton';
 import CircularProgress from 'material-ui/CircularProgress';
 import logo from '../android-logo-white.png'
@@ -34,17 +34,27 @@ class AppBarComponent extends React.Component {
         }}/>;
     }
 
+    createMenu(items = []) {
+        return items
+            .map((item, index) => {
+                return <ListItem
+                    key={index}
+                    onClick={this.handleMenuItem.bind(this, item.id)}
+                    nestedItems={this.createMenu(item.sub)}>
+                    {item.text}
+                </ListItem>
+            });
+    }
+
     render() {
-        const links = (this.props.links || []).map((link, index) => (
-            <MenuItem key={index} onTouchTap={this.handleMenuItem.bind(this, link.id)}>{link.text}</MenuItem>
-        ));
+        const links = this.createMenu(this.props.links);
         const placeHolder = links.length ? null : this.createLoader();
         return (
             <div>
                 <AppBar
                     title={
                         <div>
-                            <img src={logo} alt="logo" width={45} height={45}/>  AndroidResId - the most significant
+                            <img src={logo} alt="logo" width={45} height={45}/> AndroidResId - the most significant
                             resources for Android developers.
                         </div>
                     }
@@ -55,7 +65,7 @@ class AppBarComponent extends React.Component {
                 </AppBar>
                 <Drawer
                     docked={false}
-                    width={400}
+                    width={300}
                     style={{
                         zDepth: 1
                     }}
@@ -75,7 +85,8 @@ AppBarComponent.propTypes = {
     menuAbout: PropTypes.func,
     links: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.string,
-        text: PropTypes.string
+        text: PropTypes.string,
+        sub: PropTypes.arrayOf(PropTypes.object)
     }))
 };
 

@@ -1,3 +1,6 @@
+import * as firebase from 'firebase';
+import * as _ from 'lodash';
+
 /**
  * Get article content by Id
  * @param {string} articleId
@@ -15,6 +18,18 @@ const getContent = (articleId) => {
             return Promise.resolve('Article Id not found :(');
     }
 };
+
+const createChildCategory = (item, items) => {
+    return _.assign({
+        id: item.id + '',
+        text: item.title,
+        sub: _.chain(items)
+            .filter(si => si.parentId === item.id)
+            .map(i => createChildCategory(i, items))
+            .value()
+    });
+};
+
 /**
  * @typedef {{}} Link
  * @param {string} text
@@ -25,16 +40,16 @@ const getContent = (articleId) => {
  * @returns {Promise.<[Array.<Link>,*]>}
  */
 const getLinks = () => {
-    return Promise.resolve([
-        {
-            text: 'Menu Item 1',
-            id: 'article_1'
-        },
-        {
-            text: 'Menu Item 2',
-            id: 'article_2'
-        }
-    ]);
+    return firebase.database()
+        .ref('/items/')
+        .once('value')
+        .then(snapshot => {
+            const items = snapshot.val();
+            return _.chain(items)
+                .filter(i => i.parentId === -1)
+                .map(i => createChildCategory(i, items))
+                .value();
+        });
 };
 
 export {getLinks, getContent};
