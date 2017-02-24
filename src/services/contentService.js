@@ -1,33 +1,15 @@
 import * as firebase from 'firebase';
 import * as _ from 'lodash';
 
-/**
- * Get article content by Id
- * @param {string} articleId
- * @returns {Promise.<string, *>}
- */
-const getContent = (articleId) => {
-    switch (articleId) {
-        case 'about':
-            return Promise.resolve('Information about us');
-        case 'article_1':
-            return Promise.resolve('Some text for article number 1');
-        case 'article_2':
-            return Promise.resolve('Another text for article number 2');
-        default:
-            return Promise.resolve('Article Id not found :(');
-    }
-};
-
 const createChildCategory = (item, items) => {
-    return _.assign({
+    return {
         id: item.id + '',
         text: item.title,
         sub: _.chain(items)
             .filter(si => si.parentId === item.id)
             .map(i => createChildCategory(i, items))
             .value()
-    });
+    };
 };
 
 /**
@@ -50,6 +32,15 @@ const getLinks = () => {
                 .map(i => createChildCategory(i, items))
                 .value();
         });
+};
+
+const getContent = (id) => {
+    return firebase.database()
+        .ref('/links/')
+        .orderByChild('categoryId')
+        .equalTo(Number(id))
+        .once('value')
+        .then(snapshot => _.values(snapshot.val()));
 };
 
 export {getLinks, getContent};

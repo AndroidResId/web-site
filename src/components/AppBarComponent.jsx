@@ -3,7 +3,7 @@ import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import {ListItem} from 'material-ui/List';
 import FlatButton from 'material-ui/FlatButton';
-import CircularProgress from 'material-ui/CircularProgress';
+import {Loader} from './Loader';
 import logo from '../android-logo-white.png'
 
 class AppBarComponent extends React.Component {
@@ -27,13 +27,6 @@ class AppBarComponent extends React.Component {
         this.setState({open: false});
     };
 
-    createLoader() {
-        return <CircularProgress style={{
-            top: 'calc(50% - 20px)',
-            left: 'calc(50% - 20px)'
-        }}/>;
-    }
-
     createMenu(items = []) {
         return items
             .map((item, index) => {
@@ -48,7 +41,7 @@ class AppBarComponent extends React.Component {
 
     render() {
         const links = this.createMenu(this.props.links);
-        const placeHolder = links.length ? null : this.createLoader();
+        const placeHolder = links.length ? null : <Loader />;
         return (
             <div>
                 <AppBar
