@@ -1,20 +1,17 @@
-/**
- * Get article content by Id
- * @param {string} articleId
- * @returns {Promise.<string, *>}
- */
-const getContent = (articleId) => {
-    switch (articleId) {
-        case 'about':
-            return Promise.resolve('Information about us');
-        case 'article_1':
-            return Promise.resolve('Some text for article number 1');
-        case 'article_2':
-            return Promise.resolve('Another text for article number 2');
-        default:
-            return Promise.resolve('Article Id not found :(');
-    }
+import * as firebase from 'firebase';
+import * as _ from 'lodash';
+
+const createChildCategory = (item, items) => {
+    return {
+        id: item.id + '',
+        text: item.title,
+        sub: _.chain(items)
+            .filter(si => si.parentId === item.id)
+            .map(i => createChildCategory(i, items))
+            .value()
+    };
 };
+
 /**
  * @typedef {{}} Link
  * @param {string} text
@@ -25,16 +22,25 @@ const getContent = (articleId) => {
  * @returns {Promise.<[Array.<Link>,*]>}
  */
 const getLinks = () => {
-    return Promise.resolve([
-        {
-            text: 'Menu Item 1',
-            id: 'article_1'
-        },
-        {
-            text: 'Menu Item 2',
-            id: 'article_2'
-        }
-    ]);
+    return firebase.database()
+        .ref('/items/')
+        .once('value')
+        .then(snapshot => {
+            const items = snapshot.val();
+            return _.chain(items)
+                .filter(i => i.parentId === -1)
+                .map(i => createChildCategory(i, items))
+                .value();
+        });
+};
+
+const getContent = (id) => {
+    return firebase.database()
+        .ref('/links/')
+        .orderByChild('categoryId')
+        .equalTo(Number(id))
+        .once('value')
+        .then(snapshot => _.values(snapshot.val()));
 };
 
 export {getLinks, getContent};
